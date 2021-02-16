@@ -1,0 +1,36 @@
+\section{Méthode par Divisions Successives}
+
+    C'est l'algorithme le plus simple et le plus evident auquel on peut penser pour factoriser un nombre en facteurs premiers. C'est aussi un algorithme glouton, comme on peut voir a la lecture du code :
+    
+    \begin{lstlisting}
+func trial_division(n int) []int {
+  var a []int
+  var f = 2
+
+  for n > 1 {
+    if n % f == 0 {
+      a = append(a, f)
+      n /= f
+    } else {
+      f += 1
+    }
+  }
+
+  return a
+}
+    \end{lstlisting}
+    
+    \subsection{Principe}
+    Cet algorithme a ete ennonce par Fibonacci de la maniere suivante :
+    
+    On test pour tous les entiers premiers $p_i$ entre 2 $n$ si ce $n$ peut etre divise par le $p_i$. En trouvant un premier $p_p$ qui divise $n$, on trouve automatiquement le $p_q$ associe tel que : $p_p \cdot p_q = n$.
+    On se retrouve avec une liste de nombres qui divisent $n$. On selectionne alors les deux plus grands 
+    
+    \subsection{Complexité}
+    
+    L'algorithme n'utilise que les variables $A$ et $b$ (on considerera les variables $i$, $j$ et $k$ commes negligeables).\\
+    La complexite en espace de l'algorithme est donc : $$\lvert A \rvert + \lvert b \rvert = n \cdot n + n = n ^2 +n$$
+    
+    \subsection{Améliorations}
+    
+    Wheel Factorisation

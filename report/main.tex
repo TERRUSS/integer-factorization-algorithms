@@ -1,0 +1,175 @@
+
+%-------------------------------LATEX SYNTAX----------------------------------
+%
+%	enter:				\\, \linebreak, \newline
+%	new page: 			\newpage
+%	tab:				\tab
+%	new section:		\section{name} text
+%	new paragraph		\subsection{name} text	(subsub...section{name} for more layers)
+%	refer:				\nameref{label name}	(place "\label{name}" at the position you want to refer to)
+%	%, &, $, etc:		\%, \&, \$, etc		(these are latex operators, add a "\" to type it as text)
+%	add comment:		\commred{text}, \commblue{text}, \commpurp{text}, \commgreen{text}
+%	bullet points:		\begin{itemize} \item{text} ... \item{text} \end{itemize}
+%	clean code:			\cleancode{text}
+%	idem without indent:\cleanstyle{text}
+%	bold, italic, under:\textbf{text}, textit{text}, \underline{text}
+%	table:				\begin{tabular}{c c c} text \end{tabular}	('&' for tab, '\\' for new line)
+%	
+%	use Google for the rest
+%	
+%------------------------------------------------------------------------------
+
+\documentclass[a4paper]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+%\usepackage{titlesec}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{fancyref}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{scrextend}
+\usepackage{setspace}
+\usepackage{xargs}
+\usepackage{multicol}
+\usepackage{nameref}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage{sectsty}
+
+
+\usepackage{listings}
+\lstset{
+basicstyle=\ttfamily,
+frame=single
+}
+
+\definecolor{nordBg}{HTML}{dddddd}
+\definecolor{nordFg}{HTML}{2e3440}
+\definecolor{nordBlack}{HTML}{3b4252}
+\definecolor{nordRed}{HTML}{bf616a}
+\definecolor{nordGreen}{HTML}{a3be8c}
+\definecolor{nordYellow}{HTML}{ebcb8b}
+\definecolor{nordBlue}{HTML}{81a1c1}
+\definecolor{nordMagenta}{HTML}{b48ead}
+\definecolor{nordCyan}{HTML}{88c0d0}
+\definecolor{nordWhite}{HTML}{e5e9f0}
+
+
+\graphicspath{ {images/} }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\interfootnotelinepenalty=10000
+%\titleformat*{\subsubsection}{\large\bfseries}
+\subsubsectionfont{\large}
+\subsectionfont{\Large}
+\sectionfont{\LARGE}
+\definecolor{cleanOrange}{HTML}{D14D00}
+\definecolor{cleanDark}{HTML}{2E3440}
+\definecolor{cleanYellow}{HTML}{FFFF99}
+\definecolor{cleanBlue}{HTML}{3d0099}
+%\newcommand{\cleancode}[1]{\begin{addmargin}[3em]{3em}\fcolorbox{cleanOrange}{cleanYellow}{\texttt{\textcolor{cleanOrange}{#1}}}\end{addmargin}}
+\newcommand{\cleancode}[1]{\begin{addmargin}[3em]{3em}\texttt{\textcolor{nordBlack}{#1}}\end{addmargin}}
+\newcommand{\cleanstyle}[1]{\text{\textcolor{nordBlack}{\texttt{#1}}}}
+
+\definecolor{red}{HTML}{bf616a}
+\definecolor{blue}{HTML}{d08770}
+\definecolor{OliveGreen}{HTML}{a3be8c}
+\definecolor{Plum}{HTML}{b48ead}
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=footnotesize]{todonotes}
+\newcommandx{\commred}[2][1=]{\textcolor{Red}
+{\todo[textcolor=nordFg,linecolor=red,backgroundcolor=nordBg,bordercolor=red,#1]{\texttt{#2}}}}
+\newcommandx{\commblue}[2][1=]{\textcolor{Blue}
+{\todo[textcolor=nordFg,linecolor=blue,backgroundcolor=nordBg,bordercolor=blue,#1]{\texttt{#2}}}}
+\newcommandx{\commgreen}[2][1=]{\textcolor{OliveGreen}{\todo[textcolor=nordFg,linecolor=OliveGreen,backgroundcolor=nordBg,bordercolor=OliveGreen,#1]{\texttt{#2}}}}
+\newcommandx{\commpurp}[2][1=]{\textcolor{Plum}{\todo[textcolor=nordFg,linecolor=Plum,backgroundcolor=nordBg,bordercolor=Plum,#1]{\texttt{#2}}}}
+
+
+\lstset{frame=Trbl,numbers=left}
+
+%-----------------------------------------BEGIN DOC----------------------------------------
+
+\begin{document}
+
+\pagecolor{nordBg}
+\color{nordFg}
+
+\title{
+\hline \vspace{.3cm}
+{\Huge Analyse d’algorithmes \\et validation de programmes
+\vspace{.3cm} \hline \vspace{1cm}
+{\large\linebreak\\}}{\Large Projet
+\\\linebreak\linebreak}
+\linebreak{\Huge[ISTY]}
+\linebreak{\small - UVSQ, Paris Saclay -\linebreak}}
+\author{\\Olivier Benaben\\
+\\\\
+\\
+\\\\
+\\
+\\
+}
+\date{15 Février 2021}
+\maketitle
+\newpage
+
+
+%----------------------------------------ABSTRACT-----------------------------------------
+
+\section{Introduction}\label{Introduction}%------------------------------
+    \subsection{Choix du problème}
+    
+        Pour ce projet j'ai choisis de m'intéresser aux \cleanstyle{algorithmes de décomposition}
+        \\\cleanstyle{ de nombres en produit de facteurs premiers}.\\
+        
+        Ce choix vient du fait que ces algorithmes sont très importants ajourd'hui par la place stratégique qu'ils occupent dans le domaine de la cryptographie.\\
+        En effet le chiffrements asymétriques le plus connu et le plus utilisé - le \textit{RSA} - consiste à générer ses clefs à partir de deux très grands nombres premiers, qui sont multipliés ensuite (on appelle cette partie de la clef $N$).\\
+        Une attaque du RSA consisterait donc à retrouver les deux premiers $p$ et $q$ tels que $N = p \times q$, et c'est là qu'interviennent les algorithmes de décomposition en produit  de facteurs premiers.\\
+        
+        Les meilleurs algorithmes actuels résolvant ce problème sur des machines "normales" (non-quantiques) sont \textit{sous-exponentiels} mais  aussi \textit{super-polynomiaux}. C'est clairement un problème appartenant à la classe $NP$ : il est suffisement compliqué, mais en vérifier une solution est très simple (il suffit en effet de multiplier les solutions et d'en vérifier l'égalité avec le nombre en entrée.\\
+        En revanche on peut trouver l'algorithme de Shor qui, executé sur un ordinateur quantique, arrive à le résoudre en temps polynomial !\\
+        Le plus grand nombre factorisé par ce type de marchines s'élève cependant à ce jour à $35 = 7 \times 5$.
+        
+        Dans ce devoir nous comparerons trois algorithmes de décompositions en facteurs premiers : une première approche par Division Successive, 
+
+
+    \vspace{1cm}
+    \tableofcontents
+    
+    %------------------------------
+    
+\include{sections/trial_division}
+    
+    %------------------------------
+
+\include{sections/rational_sieve}
+
+    %------------------------------
+    
+\include{sections/fermat}
+
+
+     %------------------------------
+\include{sections/others}
+    
+    
+\section{Ressources}%------------------------------
+
+Wikipedia\\
+\url{https://www.wikiwand.com/en/Integer_factorization}\\
+\url{https://www.wikiwand.com/en/Dixon%27s_factorization_method}\\
+\url{https://www.wikiwand.com/en/Quadratic_sieve}\\
+\url{https://www.wikiwand.com/en/General_number_field_sieve}\\
+\url{https://www.wikiwand.com/en/Fermat%27s_factorization_method}\\
+\url{https://www.wikiwand.com/en/RSA_(cryptosystem)}\\
+\url{https://www.wikiwand.com/en/Shor%27s_algorithm}\\
+
+RSA Cracking Challenge\\
+\url{https://medium.com/asecuritysite-when-bob-met-alice/cracking-rsa-a-challenge-generator-2b64c4edb3e7}\\
+
+Crible Algébrique\\
+\url{https://github.com/AdamWhiteHat/GNFS/blob/master/Integer%20Factorization%20-%20Master%20Thesis%20-%20Per%20Leslie%20Jensen.pdf}\\
+\url{https://github.com/AdamWhiteHat/GNFS/blob/master/The%20Multiple%20Polynomial%20Quadradic%20Sieve%20-%20R.D.%20Silverman.pdf}
+
+\end{document}

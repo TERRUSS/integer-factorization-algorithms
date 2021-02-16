@@ -1,0 +1,19 @@
+\section{Autres algorithmes}
+    \subsection{Algorithme du Crible Algébrique}
+    
+        C'est aujourd'hui l'algorithme le plus efficace pour la factorisation en facteurs premier pour un grand nombre.
+        Les derniers "records" de factorisation sonts tous faits à partir de cet algorithmes, et recemment il a été capable de factoriser un nombre RSA-240 (ie. un nombre de 240 bits).
+        
+        Le Crible Algébrique étant la méthode de référence, c'est sur sa complexité que l'on fixe la longueur des clefs RSA pour garder un niveau de securité.
+        
+        L'algorithme étant trop complexe et mathématiquement poussée, il ne m'était pas possible de l'impémenter pour ce projet. Voici cependant les étapes de la méthode :
+        
+        \begin{enumerate}
+            \item Création de polynomes en rapport avec les entrées
+            \item Test et selection d'un des polynomes
+            \item Trouver des "relations" algebriques et relationelle avec des nombres friables en rapport avec la base factorielle du polynome.
+            \item Création et résolution d'une large matrice pour trouver les les sets de relation dont le produit des normes de ce set sont un carré parfait.
+            \item Trouver la racine carrée des polynomes sur un corps fini
+            \item Executer le Théorème des Restes Chinois
+            \item et enfin tester les resultats produits.
+        \end{enumerate}

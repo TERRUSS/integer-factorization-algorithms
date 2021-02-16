@@ -1,0 +1,21 @@
+\section{Méthode du Crible Rationnel}
+    \begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include <omp.h>
+#include <time.h>
+
+double f (double x) {
+  return 4/(1 + x*x);
+}
+    \end{lstlisting}
+    
+
+    \subsection{Complexité}
+        
+        L'algorithme n'utilise que les variables $A$ et $b$ (on considerera les variables $i$, $j$ et $k$ commes negligeables).\\
+        La complexite en espace de l'algorithme est donc : $$\lvert A \rvert + \lvert b \rvert = n \cdot n + n = n ^2 +n$$
+    
+    \subsection{Améliorations}
+    
+    Special number field sieve, General number field sieve
